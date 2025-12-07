@@ -24,10 +24,24 @@ export class UserService {
 
         const user = { name, email }
         this.db.push(user)
-        console.log('DB atualizado', this.db)
     }
 
     getAllUsers = () => {
         return this.db
+    }
+
+    deleteUser = (email: string) => {
+        if (!email || email.trim() === "") {
+            throw new Error("Email é obrigatório para deletar")
+        }
+
+        const index = this.db.findIndex(user => user.email === email)
+
+        if (index === -1) {
+            throw new Error("Usuário não encontrado")
+        }
+
+        this.db.splice(index, 1)
+        return true
     }
 }

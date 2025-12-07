@@ -13,18 +13,16 @@ const db = [
 export class UserService {
     db: User[]
 
-    constructor(
-        database = db
-    ){
+    constructor(database = db) {
         this.db = database
     }
 
     createUser = (name: string, email: string) => {
-        const user = {
-            name,
-            email
+        if (!email || email.trim() === "") {
+            throw new Error("Email é obrigatório")
         }
 
+        const user = { name, email }
         this.db.push(user)
         console.log('DB atualizado', this.db)
     }
@@ -33,4 +31,3 @@ export class UserService {
         return this.db
     }
 }
-
